@@ -7,6 +7,10 @@ using OpenQA.Selenium.Firefox;
 
 namespace DotnetSelenium.Tests.Tests;
 
+
+/*
+ * This is the test to demonstrate NUnit Tests
+ */
 [TestFixture("admin", "password", DriverType.Chrome)]
 public class NUnitTestsDemo
 {
