@@ -42,9 +42,13 @@ public class NUnitTestsDemo
 
     private IWebDriver GetDriverType(DriverType driverType)
     {
+
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.AddArgument("--headless=new");
+
         return driverType switch
         {
-            DriverType.Chrome => new ChromeDriver(),
+            DriverType.Chrome => new ChromeDriver(chromeOptions),
             DriverType.Firefox => new FirefoxDriver(),
             DriverType.Edge => new EdgeDriver(),
             _ => _driver
