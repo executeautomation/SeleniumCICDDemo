@@ -5,8 +5,7 @@
 # For format details, see: https://gh.io/customagents/config
 
 name:
-description:
-Testing UI Application with Playwright 
+description: Testing UI Application with Playwright 
 ---
 
 # My Agent
