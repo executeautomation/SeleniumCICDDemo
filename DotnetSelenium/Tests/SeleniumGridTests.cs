@@ -1,16 +1,13 @@
 ﻿using DotnetSelenium.Driver;
 using DotnetSelenium.Pages;
-using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Safari;
 namespace DotnetSelenium.Tests;
 
 [TestFixture("admin", "password", DriverType.Edge)]
-public class SeleniumGridTests
+public class SeleniumGridTests : WebDriverFixture
 {
 
-    private IWebDriver _driver;
+    private IWebDriver _driver = null!;
     private readonly string userName;
     private readonly string password;
     private readonly DriverType driverType;
@@ -25,6 +22,8 @@ public class SeleniumGridTests
     [SetUp]
     public void SetUp()
     {
+        // Note: SeleniumGrid tests still use RemoteWebDriver directly
+        // This could be extended to use DI factory pattern for RemoteWebDriver as well
         _driver = new RemoteWebDriver(new Uri("http://localhost:4444"), new ChromeOptions());
         _driver.Navigate().GoToUrl("http://eaapp.somee.com");
         _driver.Manage().Window.Maximize();
