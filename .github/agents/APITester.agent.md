@@ -5,7 +5,7 @@
 # For format details, see: https://gh.io/customagents/config
 
 name:
-description:
+description: Testing API of app
 ---
 
 # My Agent
