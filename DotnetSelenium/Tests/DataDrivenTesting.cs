@@ -2,19 +2,21 @@
 using System.Text.Json;
 using FluentAssertions;
 using DotnetSelenium.Models;
+using DotnetSelenium.Driver;
 
 namespace DotnetSelenium.Tests.Tests
 {
-    public class DataDrivenTesting
+    public class DataDrivenTesting : WebDriverFixture
     {
 
-        private IWebDriver _driver;
+        private IWebDriver _driver = null!;
 
 
         [SetUp]
         public void SetUp()
         {
-            _driver = new ChromeDriver();
+            InitializeDriver(DriverType.Chrome);
+            _driver = Driver!;
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             _driver.Navigate().GoToUrl("http://eaapp.somee.com");
             _driver.Manage().Window.Maximize();
@@ -118,7 +120,7 @@ namespace DotnetSelenium.Tests.Tests
         [TearDown]
         public void TearDown()
         {
-            _driver.Quit();
+            DisposeDriver();
         }
     }
 }

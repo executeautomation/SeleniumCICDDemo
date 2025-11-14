@@ -1,20 +1,28 @@
 using DotnetSelenium.Pages;
+using DotnetSelenium.Driver;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DotnetSelenium.Tests
 {
-    public class UnitTest1
+    public class UnitTest1 : WebDriverFixture
     {
+        private IWebDriverFactory _driverFactory = null!;
+
         [SetUp]
         public void Setup()
         {
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            ServiceProvider = services.BuildServiceProvider();
+            _driverFactory = ServiceProvider.GetRequiredService<IWebDriverFactory>();
         }
 
         [Test]
         public void Test1()
         {
             // Sudo code for setting up Selenium
-            // 1. Create a new instance of Selenium Web Driver
-            IWebDriver driver = new ChromeDriver();
+            // 1. Create a new instance of Selenium Web Driver using dependency injection
+            IWebDriver driver = _driverFactory.CreateDriver(DriverType.Chrome);
             // 2. Navigate to the URL
             driver.Navigate().GoToUrl("https://www.google.com/");
             // 2a. Maximize the browser window
@@ -27,14 +35,15 @@ namespace DotnetSelenium.Tests
             webElement.SendKeys(Keys.Return);
 
             webElement.Click();
+            driver.Quit();
         }
 
 
         [Test]
         public void EAWebSiteTest()
         {
-            // 1. Create a new instance of Selenium Web Driver
-            var driver = new ChromeDriver();
+            // 1. Create a new instance of Selenium Web Driver using dependency injection
+            var driver = _driverFactory.CreateDriver(DriverType.Chrome);
             // 2. Navigate to the URL
             driver.Navigate().GoToUrl("http://eaapp.somee.com/");
             // 3. Find the Login link
@@ -70,13 +79,14 @@ namespace DotnetSelenium.Tests
             var btnLogin = driver.FindElement(By.CssSelector(".btn"));
             // 10. Click login button
             btnLogin.Submit();
+            driver.Quit();
         }
 
         [Test]
         public void TestWithPOM()
         {
-            // 1. Create a new instance of Selenium Web Driver
-            var driver = new ChromeDriver();
+            // 1. Create a new instance of Selenium Web Driver using dependency injection
+            var driver = _driverFactory.CreateDriver(DriverType.Chrome);
             // 2. Navigate to the URL
             driver.Navigate().GoToUrl("http://eaapp.somee.com/");
             // POM initalization
@@ -85,6 +95,7 @@ namespace DotnetSelenium.Tests
             loginPage.ClickLogin();
 
             loginPage.Login("admin", "password");
+            driver.Quit();
         }
 
         //[Test]
